@@ -1,7 +1,5 @@
 
-//#include "trainstepc3.h"
-
-#include "CL/cl.hpp"
+#include "ocl.h"
 
 #include <Rcpp.h>
 #include <vector>
