@@ -16,6 +16,10 @@
 # define __FLT16_HAS_QUIET_NAN__ 1
 #endif
 
+#ifndef __ATOMIC_ACQUIRE
+# define __ATOMIC_ACQUIRE 2
+#endif
+
 #ifndef __FLT128_MAX_10_EXP__
 # define __FLT128_MAX_10_EXP__ 4932
 #endif
@@ -370,10 +374,6 @@
 
 #ifndef __STDC_HOSTED__
 # define __STDC_HOSTED__ 1
-#endif
-
-#ifndef __ATOMIC_ACQUIRE
-# define __ATOMIC_ACQUIRE 2
 #endif
 
 #ifndef __DEC64_MIN_EXP__
