@@ -40,9 +40,9 @@ if test -z "$OCL64LIB"; then
   # some SDKs are single-arch
   if test -e "$OCL/lib/OpenCL.lib" -a ! -e "$OCL/lib/x64/OpenCL.lib"; then
     echo SDK appears to include only one architecture, assuming it is 64-bit
-    OCL64LIB="$OCL/lib/OpenCL.lib"
+    OCL64LIB="$OCL/lib/x64/"
   else
-    OCL64LIB="$OCL/lib/x64/OpenCL.lib"
+    OCL64LIB="$OCL/lib/x64/"
   fi
   echo OCL64LIB not set, assuming $OCL64LIB
   if test "$DARCH" = x64 -a ! -e "$OCL64LIB"; then
@@ -50,7 +50,7 @@ if test -z "$OCL64LIB"; then
   fi
 fi
 if test -z "$OCL32LIB"; then
-   OCL32LIB="$OCL/lib/x86/OpenCL.lib"
+   OCL32LIB="$OCL/lib/x86/"
    echo OCL32LIB not set, assuming $OCL32LIB
 fi
 if test -z "$OCLINC"; then
@@ -83,8 +83,9 @@ echo "PKG_CPPFLAGS += \$(shell '\${R_HOME}/bin\${R_ARCH_BIN}/Rscript.exe' -e 'Rc
 echo "PKG_LIBS += \$(LAPACK_LIBS) \$(BLAS_LIBS) \$(FLIBS) \$(shell '\${R_HOME}/bin\${R_ARCH_BIN}/Rscript.exe' \ -e 'RcppParallel::RcppParallelLibs()')" >> src/Makevars.win
 
 # OpenCL (Funktioniert)
-echo "PKG_CPPFLAGS='-I$OCLINC'" >> src/Makevars.win
-echo "PKG_LIBS='-L$OCLLIB' -lOpenCL" >> src/Makevars.win
+#echo "PKG_CPPFLAGS='-I$OCLINC'" >> src/Makevars.win # Local solution
+echo "PKG_CPPFLAGS=-I../inst/include" >> src/Makevars.win # Ship cpp headers inside inst/include/CL/ for global solution
+echo "PKG_LIBS='-L$OCLLIB' -lOpenCL --verbose" >> src/Makevars.win
 
 echo 'all: $(SHLIB)' >> src/Makevars.win
 

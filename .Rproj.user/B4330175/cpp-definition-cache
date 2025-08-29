@@ -1,5 +1,89 @@
 [
     {
+        "file": "D:/GitHub/GeneralizedUmatrixGPU/src/ocl.h",
+        "file_last_write": 1756373316.0,
+        "definitions": [
+            {
+                "usr": "c:ocl.h@8@macro@CL_TARGET_OPENCL_VERSION",
+                "kind": 9,
+                "parent_name": "",
+                "name": "CL_TARGET_OPENCL_VERSION",
+                "file": "D:/GitHub/GeneralizedUmatrixGPU/src/ocl.h",
+                "line": 1,
+                "column": 9,
+                "hidden": false
+            },
+            {
+                "usr": "c:ocl.h@46@macro@CL_USE_DEPRECATED_OPENCL_1_1_APIS",
+                "kind": 9,
+                "parent_name": "",
+                "name": "CL_USE_DEPRECATED_OPENCL_1_1_APIS",
+                "file": "D:/GitHub/GeneralizedUmatrixGPU/src/ocl.h",
+                "line": 2,
+                "column": 9,
+                "hidden": false
+            }
+        ],
+        "hidden": false
+    },
+    {
+        "file": "D:/GitHub/GeneralizedUmatrixGPU/src/trainSESOM.cpp",
+        "file_last_write": 1756368774.0,
+        "definitions": [
+            {
+                "usr": "c:@F@get_UpdateWeights#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "get_UpdateWeights",
+                "file": "D:/GitHub/GeneralizedUmatrixGPU/src/trainSESOM.cpp",
+                "line": 13,
+                "column": 13,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@get_ToroidDistance#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "get_ToroidDistance",
+                "file": "D:/GitHub/GeneralizedUmatrixGPU/src/trainSESOM.cpp",
+                "line": 53,
+                "column": 13,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@get_NonToroidDistance#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "get_NonToroidDistance",
+                "file": "D:/GitHub/GeneralizedUmatrixGPU/src/trainSESOM.cpp",
+                "line": 85,
+                "column": 13,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@trainstepC3#I#I#I#I#I#I#I#I#I#I#I#b#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "trainstepC3(int, int, int, int, int, int, int, int, int, int, int, bool, int)",
+                "file": "D:/GitHub/GeneralizedUmatrixGPU/src/trainSESOM.cpp",
+                "line": 109,
+                "column": 20,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@trainSESOM#$@N@Rcpp@S@Vector>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#S0_#S0_#I#I#d#d#I#I#I#b#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "trainSESOM(Rcpp::NumericVector, Rcpp::NumericVector, Rcpp::NumericVector, int, int, double, double, int, int, int, bool, int)",
+                "file": "D:/GitHub/GeneralizedUmatrixGPU/src/trainSESOM.cpp",
+                "line": 274,
+                "column": 15,
+                "hidden": false
+            }
+        ],
+        "hidden": false
+    },
+    {
         "file": "G:/00Aktuell/GPU_R_Packages/GeneralizedUmatrixGPU_V5_Efficient_Float_Batch/src/trainSESOM.cpp",
         "file_last_write": 1755782758.0,
         "definitions": [
