@@ -40,9 +40,9 @@ if test -z "$OCL64LIB"; then
   # some SDKs are single-arch
   if test -e "$OCL/lib/OpenCL.lib" -a ! -e "$OCL/lib/x64/OpenCL.lib"; then
     echo SDK appears to include only one architecture, assuming it is 64-bit
-    OCL64LIB="$OCL/lib/x64/"
+    OCL64LIB="$OCL/lib/OpenCL.lib"
   else
-    OCL64LIB="$OCL/lib/x64/"
+    OCL64LIB="$OCL/lib/x64/OpenCL.lib"
   fi
   echo OCL64LIB not set, assuming $OCL64LIB
   if test "$DARCH" = x64 -a ! -e "$OCL64LIB"; then
