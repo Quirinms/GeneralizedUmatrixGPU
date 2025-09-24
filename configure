@@ -1,0 +1,47 @@
+#!/bin/sh
+####################################################################
+# configure for package GeneralizedUmatrixGPU
+# Quirin Stier
+#
+echo "Entering le file de configure"
+# CPP Flags
+CPP0="PKG_CPPFLAGS ="
+CPP1="-I../inst/include"
+CPPFLAGS="${CPP0} ${CPP1}"
+# Libraries
+LIBS0="PKG_LIBS ="
+LIBS1="$LAPACK_LIBS $BLAS_LIBS $FLIBS"
+LIBS2="$shell '${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe' \ -e 'RcppParallel::RcppParallelLibs()'"
+
+mysystem=$(uname)
+
+echo "System detected: $mysystem"
+
+case $mysystem in
+    Linux )
+        echo yes
+        ;;
+    Darwin)
+        echo no
+    ;;
+esac
+
+
+if [ $(uname) = "Linux" ]; then
+   echo "You are using Linux"
+   LIBS3="-lOpenCL"
+else
+   echo "Unsupported System"
+   LIBS3="-lOpenCL"
+fi
+
+LIBS="${LIBS0} ${LIBS1} ${LIBS2} ${LIBS3}"
+
+echo "${CPPFLAGS}" > src/Makevars
+echo "${LIBS}" >> src/Makevars
+echo "all: $(SHLIB)" >> src/Makevars
+
+echo ""
+echo "*********** Generated Makevars file ***********"
+cat src/Makevars
+echo "***********************************************"

@@ -36,23 +36,33 @@ echo ''
 echo " OCL=$OCL"
 echo ''
 
+
+# Find the local libraries for linking
 if test -z "$OCL64LIB"; then
-  # some SDKs are single-arch
-  if test -e "$OCL/lib/OpenCL.lib" -a ! -e "$OCL/lib/x64/OpenCL.lib"; then
-    echo SDK appears to include only one architecture, assuming it is 64-bit
-    OCL64LIB="$OCL/lib/OpenCL.lib"
-  else
-    OCL64LIB="$OCL/lib/x64/OpenCL.lib"
+  # Single-arch(itecture) styled SDK
+  if test -e "$OCL/lib/OpenCL.lib"; then
+    OCL64LIB="$OCL/lib/"
   fi
+  # Nvidia/Intel-styled SDK
+  if test -e "$OCL/lib/x64/OpenCL.lib"; then
+    OCL64LIB="$OCL/lib/x64/"
+  fi
+  # AMD-styled SDK
+  if test -e "$OCL/lib/x86_64/OpenCL.lib"; then
+    OCL64LIB="$OCL/lib/x86_64/"
+  fi
+  
   echo OCL64LIB not set, assuming $OCL64LIB
   if test "$DARCH" = x64 -a ! -e "$OCL64LIB"; then
     echo "WARNING: $OCL64LIB not found! Check your OCL and OCL64LIB settings!" >&2
   fi
 fi
+
 if test -z "$OCL32LIB"; then
    OCL32LIB="$OCL/lib/x86/"
    echo OCL32LIB not set, assuming $OCL32LIB
 fi
+
 if test -z "$OCLINC"; then
    OCLINC="-I$OCL/include"
    echo OCLINC not set, assuming $OCLINC
@@ -77,19 +87,17 @@ echo ''
 # > overwrites
 # >> appends
 
-# Rcpp flags (Funktioniert)
+# Rcpp flags
 echo "PKG_CPPFLAGS += -DRCPP_PARALLEL_USE_TBB=1" > src/Makevars.win
 echo "PKG_CPPFLAGS += \$(shell '\${R_HOME}/bin\${R_ARCH_BIN}/Rscript.exe' -e 'RcppParallel::CxxFlags()')" >> src/Makevars.win
 echo "PKG_LIBS += \$(LAPACK_LIBS) \$(BLAS_LIBS) \$(FLIBS) \$(shell '\${R_HOME}/bin\${R_ARCH_BIN}/Rscript.exe' \ -e 'RcppParallel::RcppParallelLibs()')" >> src/Makevars.win
 
-# OpenCL (Funktioniert)
+# OpenCL
 #echo "PKG_CPPFLAGS='-I$OCLINC'" >> src/Makevars.win # Local solution
 echo "PKG_CPPFLAGS=-I../inst/include" >> src/Makevars.win # Ship cpp headers inside inst/include/CL/ for global solution
 echo "PKG_LIBS='-L$OCLLIB' -lOpenCL --verbose" >> src/Makevars.win
 
 echo 'all: $(SHLIB)' >> src/Makevars.win
 
-
-
-
+echo PKG_LIBS=$PKG_LIBS
 
