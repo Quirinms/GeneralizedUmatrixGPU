@@ -1,6 +1,0 @@
-PKG_CPPFLAGS += -DRCPP_PARALLEL_USE_TBB=1
-PKG_CPPFLAGS += $(shell '${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe' -e 'RcppParallel::CxxFlags()')
-PKG_LIBS += $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS) $(shell '${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe' \ -e 'RcppParallel::RcppParallelLibs()')
-PKG_CPPFLAGS=-I../inst/include
-PKG_LIBS='-LC:\AMDAPPSDK\30\lib\x64' -lOpenCL --verbose
-all: $(SHLIB)
