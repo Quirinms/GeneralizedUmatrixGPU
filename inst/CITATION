@@ -1,0 +1,23 @@
+citHeader("To cite the 'GeneralizedUmatrix' R package in publications, please use:")
+
+bibentry(bibtype = "Article",
+  title = "Uncovering High-Dimensional Structures of Projections from Dimensionality Reduction Methods",
+  author = c(person(given="Michael Christoph", family="Thrun"),person(given="Alfred", family="Ultsch")),
+  journal = "MethodsX",
+  volume = "7",
+  pages = "101093",
+  year = "2020",
+  issn = "2215-0161",
+  doi = "10.1016/j.mex.2020.101093",
+  url = "https://doi.org/10.1016/j.mex.2020.101093",
+
+  textVersion =
+  paste(
+"Thrun, M. C., & Ultsch, A: ",
+"Uncovering High-Dimensional Structures of Projections from Dimensionality Reduction Methods,",
+"MethodsX,",
+"Vol. 7,",
+"pp. 101093,",
+"doi 10.1016/j.mex.2020.101093,",
+ "2020."
+))

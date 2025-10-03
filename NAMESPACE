@@ -1,0 +1,18 @@
+useDynLib("GeneralizedUmatrixGPU", .registration = TRUE)
+importFrom(Rcpp, evalCpp)
+importFrom(RcppParallel, RcppParallelLibs)
+
+#exportPattern("^[[:alpha:]]+")
+
+export(GeneralizedUmatrixGPU)
+
+
+#Island generation now in ProjectionBasedClustering package
+
+import(ggplot2)
+import(GeneralizedUmatrix)
+
+importFrom("grDevices", "dev.off", "png", "contourLines", "col2rgb", "colorRamp")
+importFrom("graphics", "lines", "par", "rasterImage")
+importFrom("stats", "median", "qnorm", "sd", "quantile", "runif", "dist","cmdscale")
+

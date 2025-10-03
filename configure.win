@@ -1,0 +1,103 @@
+if test -z "$OCL"; then
+   echo ''
+   echo 'ERROR: OCL not set!'
+   echo ''
+   echo 'SOLUTION: Set your OCL variable before installing this package as follows:'
+   echo ''
+   echo 'Sys.setenv("OCL" = "My/Path/To/SDK/3.0")'
+   echo ''
+   echo 'You will need a working OpenCL SDK with headers'
+   echo 'and libraries for both i386 and x64'
+   echo ''
+   echo 'Set OCL to the root of the SDK'
+   echo ''
+   echo 'You can also set individial variables OCLINC,'
+   echo 'OCL32LIB and OCL64LIB. Note that they are expected'
+   echo 'to be valid compiler flags. If they are not set,'
+   echo 'the default SDK layout ($SDK/include, $SDK/lib/x64)'
+   echo 'will be assumed.'
+   echo ''
+   exit 1
+fi
+
+DARCH=$(echo $R_ARCH | tr -d /)
+if test -z "$DARCH"; then
+   # R without R_ARCH is assumed to be x86_64 native
+   DARCH=x64
+   # if OCLLIB is set we pass it to OCL64LIB downstream
+   if test -n "$OCLLIB"; then
+      OCL64LIB="$OCLLIB"
+   fi
+fi
+
+echo ''
+echo " === configurig OpenCL for $DARCH =="
+echo ''
+echo " OCL=$OCL"
+echo ''
+
+
+# Find the local libraries for linking
+if test -z "$OCL64LIB"; then
+  # Single-arch(itecture) styled SDK
+  if test -e "$OCL/lib/OpenCL.lib"; then
+    OCL64LIB="$OCL/lib/"
+  fi
+  # Nvidia/Intel-styled SDK
+  if test -e "$OCL/lib/x64/OpenCL.lib"; then
+    OCL64LIB="$OCL/lib/x64/"
+  fi
+  # AMD-styled SDK
+  if test -e "$OCL/lib/x86_64/OpenCL.lib"; then
+    OCL64LIB="$OCL/lib/x86_64/"
+  fi
+  
+  echo OCL64LIB not set, assuming $OCL64LIB
+  if test "$DARCH" = x64 -a ! -e "$OCL64LIB"; then
+    echo "WARNING: $OCL64LIB not found! Check your OCL and OCL64LIB settings!" >&2
+  fi
+fi
+
+if test -z "$OCL32LIB"; then
+   OCL32LIB="$OCL/lib/x86/"
+   echo OCL32LIB not set, assuming $OCL32LIB
+fi
+
+if test -z "$OCLINC"; then
+   OCLINC="-I$OCL/include"
+   echo OCLINC not set, assuming $OCLINC
+fi
+
+echo ''
+
+if test "$R_ARCH" = i386; then
+   echo ' --- Compiling 32-bit ---'
+   OCLLIB="$OCL32LIB"
+else
+   echo ' --- Compiling 64-bit ---'
+   OCLLIB="$OCL64LIB"
+fi
+
+echo OCL=$OCL
+echo PKG_CPPFLAGS=$OCLINC
+echo PKG_LIBS=$OCLLIB
+
+echo ''
+
+# > overwrites
+# >> appends
+
+# Rcpp flags
+echo "PKG_CPPFLAGS += -DRCPP_PARALLEL_USE_TBB=1" > src/Makevars.win
+echo "PKG_CPPFLAGS += \$(shell '\${R_HOME}/bin\${R_ARCH_BIN}/Rscript.exe' -e 'RcppParallel::CxxFlags()')" >> src/Makevars.win
+echo "PKG_LIBS += \$(LAPACK_LIBS) \$(BLAS_LIBS) \$(FLIBS) \$(shell '\${R_HOME}/bin\${R_ARCH_BIN}/Rscript.exe' \ -e 'RcppParallel::RcppParallelLibs()')" >> src/Makevars.win
+
+# OpenCL
+#echo "PKG_CPPFLAGS='-I$OCLINC'" >> src/Makevars.win # Local solution
+echo "PKG_CPPFLAGS=-I../inst/include" >> src/Makevars.win # Ship cpp headers inside inst/include/CL/ for global solution
+echo "PKG_LIBS='-L$OCLLIB' -lOpenCL --verbose" >> src/Makevars.win
+
+echo 'all: $(SHLIB)' >> src/Makevars.win
+
+echo PKG_LIBS=$PKG_LIBS
+

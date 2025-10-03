@@ -1,0 +1,30 @@
+#!/bin/sh
+
+echo "configure: building makevars"
+
+mysystem=$(uname)
+
+case $mysystem in
+    Linux )
+        echo "System detected: $mysystem"
+        LIBSOCL="-lOpenCL"
+        ;;
+    Darwin )
+        echo "System detected: $mysystem"
+        LIBSOCL="-framework OpenCL"
+    ;;
+    *)
+        echo "System is unknown"
+        LIBSOCL=""
+esac
+
+echo "PKG_FLAGS+=-I../inst/include/" > src/Makevars
+printf '\nPKG_LIBS+=$(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)' >> src/Makevars
+printf '\nPKG_LIBS+=$(shell "${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" \ -e "RcppParallel::RcppParallelLibs()")\n' >> src/Makevars
+
+echo "PKG_LIBS+=$LIBSOCL" >> src/Makevars
+
+printf '\nall: $(SHLIB)\n' >> src/Makevars
+echo "" >> src/Makevars
+echo "End of configure"
+
