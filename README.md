@@ -5,7 +5,6 @@
 # GeneralizedUmatrixGPU + GeneralizedUmatrix
 * [GeneralizedUmatrix on Github](https://github.com/Mthrun/GeneralizedUmatrix)
 * [GeneralizedUmatrix on CRAN](https://cran.r-project.org/package=GeneralizedUmatrix)
-* [GeneralizedUmatrixGPU on CRAN](https://cran.r-project.org/package=GeneralizedUmatrixGPU)
 
 ### Table of Contents  
 [1. Introduction](#introduction)  
