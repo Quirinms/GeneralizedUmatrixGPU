@@ -5,7 +5,7 @@
 [Thrun/Ultsch, 2020]}
 \usage{
 GeneralizedUmatrixGPU(Data, ProjectedPoints, PlotIt = FALSE, Cls = NULL,
-Toroid = TRUE, Tiled = FALSE, DataPerEpoch = 1, \dots)
+Toroid = TRUE, Tiled = FALSE, DataPerEpoch = 1, Verbose = 0, \dots)
 }
 \arguments{
 \item{Data}{[1:n,1:d] array of data: n cases in rows, d variables in columns.}
@@ -22,6 +22,8 @@ projection method are ignored.}
 \item{DataPerEpoch}{Optional, scalar, value above zero and below 1 starts
 sampling and defines percentage of data points sampled in each epoch during the
 learning phase. Beware: Experimental!}
+\item{Verbose}{Integer, determining text output during computation (Verbose > 0)
+or silent mode (Verbose=0).}
 \item{\dots}{Further parameters.}
 }
 \value{List with
@@ -88,9 +90,11 @@ Cls=Chainlink$Cls
 InputDistances=as.matrix(dist(Data))
 res=cmdscale(d=InputDistances, k = 2, eig = TRUE, add = FALSE, x.ret = FALSE)
 ProjectedPoints=as.matrix(res$points)
-\dontrun{
+\donttest{
+if(requireNamespace("ProjectionBasedClustering")){
 Stress = ProjectionBasedClustering::KruskalStress(InputDistances,
 as.matrix(dist(ProjectedPoints)))
+}
 }
 \donttest{
 resUmatrix=GeneralizedUmatrixGPU(Data[1:2,], ProjectedPoints[1:2,])
