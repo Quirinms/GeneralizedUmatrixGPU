@@ -3,14 +3,8 @@
 
 #ifdef __APPLE__
 #include <OpenCL/cl.h>
-//#include <OpenCL/cl.hpp>
-//else
-//#include <CL/cl.h>
-//#include <CL/cl.hpp>
 #elif _WIN32 || _WIN64
 #include <CL/cl.h>
-//#include <CL/cl.hpp>
 #elif __linux__
 #include <CL/cl.h>
-//#include <CL/cl.hpp>
 #endif

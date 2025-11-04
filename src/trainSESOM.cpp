@@ -107,43 +107,43 @@ std::string get_NonToroidDistance(){
   return(NonToroidDistance);
 }
 
-static char* get_info_string(cl_platform_id plat, cl_platform_info param) {
-  size_t size = 0;
-  cl_int err = clGetPlatformInfo(plat, param, 0, NULL, &size);
-  if (err != CL_SUCCESS) return NULL;
-  char *buf = (char*)malloc(size + 1);
-  if (!buf) return NULL;
-  err = clGetPlatformInfo(plat, param, size, buf, NULL);
-  if (err != CL_SUCCESS) { free(buf); return NULL; }
-  buf[size] = '\0';
-  return buf;
-}
-
-static char* get_device_info_string(cl_device_id dev, cl_device_info param) {
-  size_t size = 0;
-  cl_int err = clGetDeviceInfo(dev, param, 0, NULL, &size);
-  if (err != CL_SUCCESS) return NULL;
-  char *buf = (char*)malloc(size + 1);
-  if (!buf) return NULL;
-  err = clGetDeviceInfo(dev, param, size, buf, NULL);
-  if (err != CL_SUCCESS) { free(buf); return NULL; }
-  buf[size] = '\0';
-  return buf;
-}
-
-static void print_device_type(cl_device_id dev) {
-  cl_device_type type;
-  if (clGetDeviceInfo(dev, CL_DEVICE_TYPE, sizeof(type), &type, NULL) != CL_SUCCESS) {
-    printf("    Type: <unknown>\n");
-    return;
-  }
-  printf("    Type: ");
-  if (type & CL_DEVICE_TYPE_CPU) printf("CPU ");
-  if (type & CL_DEVICE_TYPE_GPU) printf("GPU ");
-  if (type & CL_DEVICE_TYPE_ACCELERATOR) printf("ACCELERATOR ");
-  if (type & CL_DEVICE_TYPE_DEFAULT) printf("DEFAULT ");
-  printf("\n");
-}
+// static char* get_info_string(cl_platform_id plat, cl_platform_info param) {
+//   size_t size = 0;
+//   cl_int err = clGetPlatformInfo(plat, param, 0, NULL, &size);
+//   if (err != CL_SUCCESS) return NULL;
+//   char *buf = (char*)malloc(size + 1);
+//   if (!buf) return NULL;
+//   err = clGetPlatformInfo(plat, param, size, buf, NULL);
+//   if (err != CL_SUCCESS) { free(buf); return NULL; }
+//   buf[size] = '\0';
+//   return buf;
+// }
+// 
+// static char* get_device_info_string(cl_device_id dev, cl_device_info param) {
+//   size_t size = 0;
+//   cl_int err = clGetDeviceInfo(dev, param, 0, NULL, &size);
+//   if (err != CL_SUCCESS) return NULL;
+//   char *buf = (char*)malloc(size + 1);
+//   if (!buf) return NULL;
+//   err = clGetDeviceInfo(dev, param, size, buf, NULL);
+//   if (err != CL_SUCCESS) { free(buf); return NULL; }
+//   buf[size] = '\0';
+//   return buf;
+// }
+// 
+// static void print_device_type(cl_device_id dev) {
+//   cl_device_type type;
+//   if (clGetDeviceInfo(dev, CL_DEVICE_TYPE, sizeof(type), &type, NULL) != CL_SUCCESS) {
+//     printf("    Type: <unknown>\n");
+//     return;
+//   }
+//   printf("    Type: ");
+//   if (type & CL_DEVICE_TYPE_CPU) printf("CPU ");
+//   if (type & CL_DEVICE_TYPE_GPU) printf("GPU ");
+//   if (type & CL_DEVICE_TYPE_ACCELERATOR) printf("ACCELERATOR ");
+//   if (type & CL_DEVICE_TYPE_DEFAULT) printf("DEFAULT ");
+//   printf("\n");
+// }
 
 //static void die(const char *msg, cl_int err) {
 //  if (err != CL_SUCCESS) {
@@ -209,12 +209,12 @@ std::vector<float> trainstepC3(std::vector<float> esomwts,
     for(cl_uint d = 0; d < numDevicesSearch; ++d){
       //printf("  Device %u:\n", d);
       
-      char *dev_name = get_device_info_string(deviceSearch[d], CL_DEVICE_NAME);
-      char *dev_vendor = get_device_info_string(deviceSearch[d], CL_DEVICE_VENDOR);
-      char *dev_driver = get_device_info_string(deviceSearch[d], CL_DRIVER_VERSION);
-      char *dev_version = get_device_info_string(deviceSearch[d], CL_DEVICE_VERSION);
-      char *dev_profile = get_device_info_string(deviceSearch[d], CL_DEVICE_PROFILE);
-      char *dev_extensions = get_device_info_string(deviceSearch[d], CL_DEVICE_EXTENSIONS);
+      // char *dev_name = get_device_info_string(deviceSearch[d], CL_DEVICE_NAME);
+      // char *dev_vendor = get_device_info_string(deviceSearch[d], CL_DEVICE_VENDOR);
+      // char *dev_driver = get_device_info_string(deviceSearch[d], CL_DRIVER_VERSION);
+      // char *dev_version = get_device_info_string(deviceSearch[d], CL_DEVICE_VERSION);
+      // char *dev_profile = get_device_info_string(deviceSearch[d], CL_DEVICE_PROFILE);
+      // char *dev_extensions = get_device_info_string(deviceSearch[d], CL_DEVICE_EXTENSIONS);
       
       //printf("    Name:                    %s\n", dev_name ? dev_name : "<unknown>");
       //printf("    Vendor:                  %s\n", dev_vendor ? dev_vendor : "<unknown>");
@@ -285,6 +285,7 @@ std::vector<float> trainstepC3(std::vector<float> esomwts,
   // Build and compile the kernel
   cl_context MyOCLContext     = clCreateContext(nullptr, 1, &devices[DeviceNumber], nullptr, nullptr, &Error0);
   cl_command_queue MyOCLQueue = clCreateCommandQueue(MyOCLContext, devices[DeviceNumber], 0, &Error0);
+  //cl_command_queue MyOCLQueue = clCreateCommandQueueWithProperties(MyOCLContext, devices[DeviceNumber], 0, &Error0);
   
   //if(toroid == true){
     std::string KernelToroidDistance = get_ToroidDistance();

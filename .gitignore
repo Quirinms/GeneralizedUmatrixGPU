@@ -8,3 +8,4 @@ src/*.dll
 src/Makevars.win
 src/Makevars
 
+.Rproj.user

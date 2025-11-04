@@ -93,11 +93,9 @@ echo "PKG_CPPFLAGS += \$(shell '\${R_HOME}/bin\${R_ARCH_BIN}/Rscript.exe' -e 'Rc
 echo "PKG_LIBS += \$(LAPACK_LIBS) \$(BLAS_LIBS) \$(FLIBS) \$(shell '\${R_HOME}/bin\${R_ARCH_BIN}/Rscript.exe' \ -e 'RcppParallel::RcppParallelLibs()')" >> src/Makevars.win
 
 # OpenCL
-#echo "PKG_CPPFLAGS='-I$OCLINC'" >> src/Makevars.win # Local solution
-echo "PKG_CPPFLAGS=-I../inst/include" >> src/Makevars.win # Ship cpp headers inside inst/include/CL/ for global solution
+#echo "PKG_CPPFLAGS+='-I$OCLINC'" >> src/Makevars.win # Local solution
+echo "PKG_CPPFLAGS+=-I../inst/include" >> src/Makevars.win # Ship cpp headers inside inst/include/CL/ for global solution
+#echo "PKG_CPPFLAGS+=-I../inst/include -DCL_USE_DEPRECATED_OPENCL_1_2_APIS" >> src/Makevars.win # Ship cpp headers inside inst/include/CL/ for global solution
 echo "PKG_LIBS='-L$OCLLIB' -lOpenCL --verbose" >> src/Makevars.win
 
 echo 'all: $(SHLIB)' >> src/Makevars.win
-
-echo PKG_LIBS=$PKG_LIBS
-

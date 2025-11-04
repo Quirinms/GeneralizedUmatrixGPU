@@ -1,5 +1,6 @@
 GeneralizedUmatrixGPU=function(Data, ProjectedPoints, PlotIt=FALSE, Cls=NULL,
-                            Toroid=TRUE, Tiled=FALSE, DataPerEpoch=1, ...){
+                               Toroid=TRUE, Tiled=FALSE, DataPerEpoch=1,
+                               Verbose = 0, ...){
   #V=GeneralizedUmatrix(ProjectedPoints,Data)
   #V=GeneralizedUmatrix(ProjectedPoints,Data,TRUE,Cls,TRUE)
   # Generalisierte U-Matrix fuer Projektionsverfahren
@@ -336,7 +337,7 @@ GeneralizedUmatrixGPU=function(Data, ProjectedPoints, PlotIt=FALSE, Cls=NULL,
   
   if(length(RadiusVector) > 30){
     RadiusVector = seq(from = max(RadiusVector), to = min(RadiusVector), by = -2)
-    print(RadiusVector)
+    #print(RadiusVector)
   }
   
   MinData = min(Data)
@@ -355,7 +356,9 @@ GeneralizedUmatrixGPU=function(Data, ProjectedPoints, PlotIt=FALSE, Cls=NULL,
   ##########################################################################
   # End, simplified ESOM Algorithmus for given BestMatching units
   ##########################################################################
-  print(paste0('Operator: calcUmatrix() generates U-Matrix now...'))
+  if(Verbose > 0){
+    print(paste0('Operator: calcUmatrix() generates U-Matrix now...'))
+  }
   
   wts = array(data = wts, dim = c(k, m, d))
   
@@ -380,6 +383,7 @@ GeneralizedUmatrixGPU=function(Data, ProjectedPoints, PlotIt=FALSE, Cls=NULL,
               sESOMparamaters = list(Eppochs          = HeuristischerParameter,
                                      Rmax             = HeuristischerParameter,
                                      Rmin             = 1,
+                                     RadiusVector     = RadiusVector,
                                      CoolingStrategie = 'Linear, Lernratate ist const =1',
                                      Toroid           = toroid),
               gplotres        = gplotres))
